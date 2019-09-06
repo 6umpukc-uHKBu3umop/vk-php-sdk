@@ -10,6 +10,8 @@ use Bitrix\Main\Web\HttpHeaders;
 
 class CurlHttpClient implements TransportClient {
 
+	const DELAY_PER_REQUEST = 500000;
+
     protected const HEADER_UPLOAD_CONTENT_TYPE = 'Content-Type: multipart/form-data';
     protected const QUESTION_MARK = '?';
 
@@ -57,6 +59,7 @@ class CurlHttpClient implements TransportClient {
 
 	private function checkErrors(HttpClient $httpClient)
 	{
+		usleep(static::DELAY_PER_REQUEST);
 		$errors = $httpClient->getError();
 		if (count($errors) == 0)
 		{
